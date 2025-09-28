@@ -8,9 +8,7 @@ class CustomUser(AbstractUser):
     number_phone = models.CharField(
         max_length=15, blank=True, null=True, verbose_name="Номер телефона"
     )
-    town = models.CharField(
-        max_length=50, blank=True, null=True, verbose_name="Город"
-    )
+    town = models.CharField(max_length=50, blank=True, null=True, verbose_name="Город")
     avatar = models.ImageField(
         upload_to="users", blank=True, null=True, verbose_name="Аватар пользователя"
     )
