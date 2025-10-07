@@ -1,0 +1,16 @@
+[
+  {
+    "user":1,
+    "date":"2025/10/07",
+    "course":1,
+    "amount":1000,
+    "payment_method": "cash"
+  },
+  {
+    "user":1,
+    "date":"2025/10/06",
+    "lesson":1,
+    "amount":100,
+    "payment_method": "transfer"
+  }
+]
