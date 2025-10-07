@@ -63,7 +63,7 @@ class Payment(models.Model):
     paid_item = GenericForeignKey('content_type', 'object_id')
 
     def __str__(self):
-        return f"Платёж от {self.user} на сумму {self.amount} руб."
+        return f"Платеж от {self.user} на сумму {self.amount} руб."
 
     class Meta:
         verbose_name = "Платёж"
