@@ -66,7 +66,7 @@ class Payment(models.Model):
         return f"Платеж от {self.user} на сумму {self.amount} руб."
 
     class Meta:
-        verbose_name = "Платёж"
+        verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
 
 
