@@ -24,7 +24,7 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to="lms/images", blank=True, null=True)
     description = models.TextField(max_length=200, verbose_name="описание")
     video_link = models.CharField(
-        max_length=100, unique=True, blank=True, verbose_name="ссылка"
+        max_length=100, unique=True, blank=True, null=True, verbose_name="ссылка"
     )
     course = models.ForeignKey(Course, on_delete=CASCADE, related_name="lessons")
 
