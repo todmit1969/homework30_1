@@ -58,18 +58,11 @@ class Payment(models.Model):
         null=True,
         verbose_name="Ссылка на оплату"
     )
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    paid_item = GenericForeignKey('content_type', 'object_id')
 
     def __str__(self):
-        return f"Платёж от {self.user} на сумму {self.amount} руб."
+        return f"Платеж от {self.user} на сумму {self.amount} руб."
 
     class Meta:
-        verbose_name = "Платёж"
+        verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
 
-
-    date = models.DateField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(max_length=50)
