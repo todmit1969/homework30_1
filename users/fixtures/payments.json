@@ -1,0 +1,35 @@
+[
+{
+    "model": "users.payment",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "date": "2025-10-10T00:00:00Z",
+        "amount": "100.00",
+        "payment_method": "cash",
+        "payment_url": null
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "date": "2025-10-11T14:57:02.316Z",
+        "amount": "1000.00",
+        "payment_method": "transfer",
+        "payment_url": null
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 3,
+    "fields": {
+        "user": 2,
+        "date": "2025-10-11T15:00:42.180Z",
+        "amount": "150.00",
+        "payment_method": "cash",
+        "payment_url": null
+    }
+}
+]
