@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import CASCADE
+from config import settings
 
 
 class Course(models.Model):
@@ -8,6 +9,13 @@ class Course(models.Model):
     )
     preview = models.ImageField(upload_to="lms/images", blank=True, null=True)
     description = models.TextField(max_length=200, verbose_name="описание")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='course',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.title}, {self.description}"
@@ -27,6 +35,13 @@ class Lesson(models.Model):
         max_length=100, unique=True, blank=True, null=True, verbose_name="ссылка"
     )
     course = models.ForeignKey(Course, on_delete=CASCADE, related_name="lessons")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='lesson',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.title}, {self.description}"
