@@ -9,6 +9,7 @@ from rest_framework.generics import (
 )
 
 from lms.models import Course, Lesson
+from lms.paginators import LMSPaginator
 from lms.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModerator, IsOwner
 
@@ -16,6 +17,7 @@ from users.permissions import IsModerator, IsOwner
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = LMSPaginator
 
     def get_permissions(self):
         if self.action in ["retrieve", "update", "partial_update"]:
