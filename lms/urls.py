@@ -1,5 +1,5 @@
 from rest_framework.routers import SimpleRouter
-from django.urls import path
+from django.urls import path, include
 
 from lms.views import (
     CourseViewSet,
@@ -23,6 +23,7 @@ urlpatterns = [
     path('lms/create', LessonCreateAPIView.as_view(),name='lessons_create'),
     path('lms/<int:pk>/delete', LessonDestroyAPIView.as_view(), name='lessons_delete'),
     path('lms/<int:pk>/update', LessonUpdateAPIView.as_view(),name='lessons_update'),
+    path('',include(router.urls)),
 
 ]
 

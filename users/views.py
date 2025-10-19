@@ -52,7 +52,7 @@ class UserViewSet(ModelViewSet):
 class SubscriptionView(APIView):
     def post(self, request):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get('course')
         course = get_object_or_404(Course, id=course_id)
 
         subs_item = Subscription.objects.filter(user=user, course=course)
