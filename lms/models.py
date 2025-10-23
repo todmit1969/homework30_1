@@ -16,6 +16,7 @@ class Course(models.Model):
         blank=True,
         null=True,
     )
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}, {self.description}"
@@ -43,6 +44,7 @@ class Lesson(models.Model):
         blank=True,
         null=True,
     )
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}, {self.description}"
