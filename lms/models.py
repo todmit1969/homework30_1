@@ -12,9 +12,9 @@ class Course(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='course',
+        related_name="course",
         blank=True,
-        null=True
+        null=True,
     )
 
     def __str__(self):
@@ -23,7 +23,8 @@ class Course(models.Model):
     class Meta:
         verbose_name = "курс"
         verbose_name_plural = "курсы"
-        ordering =['title']
+        ordering = ["title"]
+
 
 class Lesson(models.Model):
     title = models.CharField(
@@ -38,9 +39,9 @@ class Lesson(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='lesson',
+        related_name="lesson",
         blank=True,
-        null=True
+        null=True,
     )
 
     def __str__(self):
@@ -49,4 +50,4 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "урок"
         verbose_name_plural = "уроки"
-        ordering =['title']
+        ordering = ["title"]

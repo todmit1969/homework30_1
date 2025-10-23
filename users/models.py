@@ -27,36 +27,26 @@ class CustomUser(AbstractUser):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
+
 class Payment(models.Model):
     PAYMENT_METHOD_CHOICES = [
-        ('cash', 'Наличные'),
-        ('transfer', 'Перевод на счeт'),
+        ("stripe", "Перевод через Stripe"),
+        ("cash", "Наличные"),
+        ("transfer", "Перевод на счeт"),
     ]
     user = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        verbose_name="Пользователь"
+        CustomUser, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
-    date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата оплаты"
-    )
+    date = models.DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
     amount = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Сумма оплаты"
+        max_digits=10, decimal_places=2, verbose_name="Сумма оплаты"
     )
     payment_method = models.CharField(
-        max_length=10,
-        choices=PAYMENT_METHOD_CHOICES,
-        verbose_name="Способ оплаты"
+        max_length=10, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты"
     )
 
     payment_url = models.URLField(
-        max_length=500,
-        blank=True,
-        null=True,
-        verbose_name="Ссылка на оплату"
+        max_length=500, blank=True, null=True, verbose_name="Ссылка на оплату"
     )
 
     def __str__(self):
@@ -66,13 +56,18 @@ class Payment(models.Model):
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
 
+
 class Subscription(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс")
-    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата подписки")
+    subscribed_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата подписки"
+    )
 
     class Meta:
-        unique_together = ('user', 'course')
+        unique_together = ("user", "course")
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
 

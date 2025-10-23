@@ -31,6 +31,7 @@ class CourseViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, ~IsModerator]
@@ -40,21 +41,25 @@ class LessonCreateAPIView(CreateAPIView):
         new_lesson.owner = self.request.user
         new_lesson.save()
 
+
 class LessonListAPIView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsOwner|IsModerator]
+    permission_classes = [IsOwner | IsModerator]
     pagination_class = LMSPaginator
+
 
 class LessonRetrieveAPIView(RetrieveAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsOwner|IsModerator]
+    permission_classes = [IsOwner | IsModerator]
+
 
 class LessonUpdateAPIView(UpdateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsOwner|IsModerator]
+    permission_classes = [IsOwner | IsModerator]
+
 
 class LessonDestroyAPIView(DestroyAPIView):
     queryset = Lesson.objects.all()

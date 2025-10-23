@@ -19,8 +19,8 @@ class PaymentViewSet(ModelViewSet):
     serializer_class = PaymentSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = PaymentFilter
-    ordering_fields = ['date']
-    ordering = ['-date']
+    ordering_fields = ["date"]
+    ordering = ["-date"]
 
     def create(self, request, *args, **kwargs):
         course_id = request.data.get("course")
@@ -29,6 +29,7 @@ class PaymentViewSet(ModelViewSet):
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = CustomUserSerializer
@@ -40,6 +41,7 @@ class UserCreateAPIView(CreateAPIView):
         user.set_password(user.password)
         user.save()
 
+
 class UserViewSet(ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
@@ -49,18 +51,19 @@ class UserViewSet(ModelViewSet):
             return CustomUser.objects.filter(id=self.request.user.id)
         return CustomUser.objects.none()
 
+
 class SubscriptionView(APIView):
     def post(self, request):
         user = request.user
-        course_id = request.data.get('course')
+        course_id = request.data.get("course")
         course = get_object_or_404(Course, id=course_id)
 
         subs_item = Subscription.objects.filter(user=user, course=course)
         if subs_item.exists():
             subs_item.delete()
-            message = 'подписка удалена'
+            message = "подписка удалена"
         else:
             Subscription.objects.create(user=user, course=course)
-            message = 'подписка добавлена'
+            message = "подписка добавлена"
 
         return Response({"message": message}, status=status.HTTP_200_OK)
