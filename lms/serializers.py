@@ -11,7 +11,9 @@ class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
-        validators = [VideoLinkValidator(field='video_link'),]
+        validators = [
+            VideoLinkValidator(field="video_link"),
+        ]
 
 
 class CourseSerializer(ModelSerializer):
@@ -20,12 +22,12 @@ class CourseSerializer(ModelSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
     def get_number_of_lessons(self, course):
-        return Lesson.objects.filter(course =course).count()
+        return Lesson.objects.filter(course=course).count()
 
     def get_is_subscribed(self, object):
-        user = self.context['request'].user
+        user = self.context["request"].user
         return Subscription.objects.filter(user=user, course=object).exists()
 
     class Meta:
         model = Course
-        fields = "__all__" #("id", "title", "preview", "description", "lessons", "number_of_lessons")
+        fields = "__all__"  # ("id", "title", "preview", "description", "lessons", "number_of_lessons")
