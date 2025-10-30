@@ -17,6 +17,13 @@ class Course(models.Model):
         null=True,
     )
     price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True,verbose_name='Дата обновления курса')
+    notification_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name='id задачи уведомления'
+    )
 
     def __str__(self):
         return f"{self.title}, {self.description}"
@@ -45,6 +52,7 @@ class Lesson(models.Model):
         null=True,
     )
     price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления урока')
 
     def __str__(self):
         return f"{self.title}, {self.description}"

@@ -1,3 +1,4 @@
+from celery.result import AsyncResult
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import (
@@ -11,6 +12,7 @@ from rest_framework.generics import (
 from lms.models import Course, Lesson
 from lms.paginators import LMSPaginator
 from lms.serializers import CourseSerializer, LessonSerializer
+from lms.tasks import send_email
 from users.permissions import IsModerator, IsOwner
 
 
@@ -31,6 +33,22 @@ class CourseViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        self.schedule_notification(instance.id)
+
+    def schedule_notification(self, course_id):
+        course = Course.objects.get(id=course_id)
+        if course.notification_id:
+            AsyncResult(course.notification_task_id).revoke(terminate=True)
+
+        result = send_email.apply_async(
+            args=[course_id],
+            countdown=4 * 60 * 60
+        )
+
+        course.notification_id = result.id
+        course.save()
 
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
