@@ -3,6 +3,7 @@ from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
 def create_stripe_product(name: str) -> str:
     try:
         product = stripe.Product.create(
@@ -12,6 +13,7 @@ def create_stripe_product(name: str) -> str:
         return product.id
     except stripe.error.StripeError as e:
         raise Exception(f"Ошибка при создании продукта: {str(e)}")
+
 
 def create_stripe_price(product_id: str, amount: float, currency: str = "rub") -> str:
     try:
@@ -24,6 +26,7 @@ def create_stripe_price(product_id: str, amount: float, currency: str = "rub") -
         return price.id
     except stripe.error.StripeError as e:
         raise Exception(f"Ошибка при создании цены: {str(e)}")
+
 
 def create_stripe_checkout_session(price_id: str, success_url: str, cancel_url: str) -> dict:
     try:
@@ -42,6 +45,7 @@ def create_stripe_checkout_session(price_id: str, success_url: str, cancel_url: 
         return {"url": session.url, "session_id": session.id}
     except stripe.error.StripeError as e:
         raise Exception(f"Ошибка при создании сессии: {str(e)}")
+
 
 def retrieve_stripe_session(session_id: str) -> dict:
     try:

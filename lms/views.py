@@ -1,13 +1,9 @@
 from celery.result import AsyncResult
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import (
-    CreateAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    DestroyAPIView,
-)
 
 from lms.models import Course, Lesson
 from lms.paginators import LMSPaginator
@@ -49,6 +45,7 @@ class CourseViewSet(ModelViewSet):
 
         course.notification_id = result.id
         course.save()
+
 
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
