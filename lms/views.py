@@ -50,6 +50,7 @@ class CourseViewSet(ModelViewSet):
         course.notification_id = result.id
         course.save()
 
+
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, ~IsModerator]
