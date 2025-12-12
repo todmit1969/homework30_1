@@ -1,8 +1,8 @@
 name: Django CI/CD pipeline
 
-on: [push, pull_request]
-#  push:
-#    branches: [ develop, homework35_2 ]
+on: 
+  push:
+    branches: [ develop, homework35_2 ]
 #  pull_request:
 #    branches: [ develop, homework35_2 ]
 
