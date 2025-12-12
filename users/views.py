@@ -71,7 +71,7 @@ class PaymentViewSet(ModelViewSet):
             except stripe.error.StripeError as e:
                 return Response({"error": f"Ошибка платежной системы: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
             except Exception as e:
-                return Response({"error": f"Внутренняя ошибка сервера: {str(e)}"}, 
+                return Response({"error": f"Внутренняя ошибка сервера: {str(e)}"},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             self.perform_create(serializer)
