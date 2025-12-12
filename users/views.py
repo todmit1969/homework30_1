@@ -51,26 +51,27 @@ class PaymentViewSet(ModelViewSet):
                 price_id = create_stripe_price(product_id, float(item.price))
 
                 success_url = request.build_absolute_uri(
-                    reverse('materials:course-detail' if item_type == "course" else 'materials:lesson-detail', kwargs={'pk': course_id or lesson_id})
+                    reverse('materials:course-detail' if item_type == "course" else 'materials:lesson-detail',
+                            kwargs={'pk': course_id or lesson_id})
                 )
                 cancel_url = success_url
                 session_data = create_stripe_checkout_session(price_id, success_url, cancel_url)
 
-                payment = Payment.objects.create(
-                    user=validated_data['user'],
-                    course=validated_data['course'],
-                    lesson=validated_data['lesson'],
-                    amount=validated_data['amount'],
-                    payment_method="stripe",
-                    stripe_session_id=session_data["session_id"],
-                    payment_url=session_data["url"]
-                )
+#                payment = Payment.objects.create(
+#                    user=validated_data['user'],
+#                    course=validated_data['course'],
+#                    lesson=validated_data['lesson'],
+#                    amount=validated_data['amount'],
+#                    payment_method="stripe",
+#                    stripe_session_id=session_data["session_id"],
+#                    payment_url=session_data["url"]
+#                )
                 return Response({"payment_url": session_data["url"]}, status=status.HTTP_201_CREATED)
 
             except stripe.error.StripeError as e:
                 return Response({"error": f"Ошибка платежной системы: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
             except Exception as e:
-                return Response({"error": "Внутренняя ошибка сервера"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({"error": f"Внутренняя ошибка сервера: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
