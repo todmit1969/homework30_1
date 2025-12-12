@@ -21,7 +21,7 @@ def send_email(course_id=None):
                     subject=f'Курс "{course.name}" обновлен',
                     message=f'Добрый день! Вы подписаны на обновление курса "{course.name}". Можете просмотреть '
                             f'изменения в личном кабинете.',
-                    from_email= EMAIL_HOST_USER,
+                    from_email=EMAIL_HOST_USER,
                     recipient_list=emails
                 )
                 print(f"Письма отправлены {len(emails)} подписчикам")
