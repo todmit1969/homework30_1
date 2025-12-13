@@ -90,16 +90,16 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-#    - name: Generate poetry.lock for deployment
-#      run: |
-#        pip install poetry
-#        if [ ! -f poetry.lock ]; then
-#          echo "poetry.lock not found, generating..."
-#          poetry lock --no-interaction
-#        else
-#          echo "poetry.lock found, checking for updates..."
-#          poetry lock --no-interaction
-#        fi
+    - name: Generate poetry.lock for deployment
+      run: |
+        pip install poetry
+        if [ ! -f poetry.lock ]; then
+          echo "poetry.lock not found, generating..."
+          poetry lock --no-interaction
+        else
+          echo "poetry.lock found, checking for updates..."
+          poetry lock --no-interaction
+        fi
 
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.9.0
