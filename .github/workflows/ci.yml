@@ -63,8 +63,8 @@ jobs:
       run: |
         poetry install --no-interaction --no-root
 
-    - name: Run migrations
-      run: python manage.py migrate
+#    - name: Run migrations
+#      run: python manage.py migrate
 
     - name: Run tests
       run: python manage.py test

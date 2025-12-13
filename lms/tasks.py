@@ -1,12 +1,10 @@
-from datetime import timedelta
-
 from celery import shared_task
 from django.core.mail import send_mail
-from django.utils import timezone
-
 from config.settings import EMAIL_HOST_USER
 from lms.models import Course
 from users.models import Subscription
+from datetime import timedelta
+from django.utils import timezone
 
 
 @shared_task
@@ -21,8 +19,8 @@ def send_email(course_id=None):
                 emails = [subscription.user.email for subscription in subscriptions]
                 send_mail(
                     subject=f'Курс "{course.name}" обновлен',
-                    message=f'Добрый день! Вы подписаны на обновление курса "{course.name}".'
-                            f'Можете просмотреть изменения в личном кабинете.',
+                    message=f'Добрый день! Вы подписаны на обновление курса "{course.name}". Можете просмотреть '
+                            f'изменения в личном кабинете.',
                     from_email=EMAIL_HOST_USER,
                     recipient_list=emails
                 )
