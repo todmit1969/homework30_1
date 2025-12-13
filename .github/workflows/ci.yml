@@ -18,11 +18,7 @@ jobs:
           python-version: '3.13'
       - name: Install flake8
         run: |
-<<<<<<< HEAD
           python -m pip install --upgrade pip
-=======
-          python -m pip install --upgrade flake8
->>>>>>> 66b2fd7217cb43f60cf3cbddc4306a511db95636
           pip install flake8
       - name: Run flake8
         run: flake8 .
