@@ -184,7 +184,7 @@ jobs:
 
     - name: Verify deployment
       run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+        ssh -t ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
         cd ${{ secrets.DEPLOY_DIR }}
           echo "=== Status of containers ==="
           sudo docker ps
