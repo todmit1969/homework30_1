@@ -184,10 +184,9 @@ jobs:
 
     - name: Verify deployment
       run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          cd ${{ secrets.DEPLOY_DIR }}
+        cd ${{ secrets.DEPLOY_DIR }}
           echo "=== Status of containers ==="
-          sudo docker-compose ps
+          sudo docker ps
           echo "=== Recent logs ==="
-          sudo docker-compose logs --tail=20
+          sudo docker logs --tail=20
         EOF
