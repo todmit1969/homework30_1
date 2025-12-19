@@ -24,20 +24,22 @@
 ### Локальный запуск
 
 1. Клонируйте проект.
+   ```bash
    git clone https://github.com/todmit1969/homework30_1.git
-   
+   ```
 3.  Скопируйте шаблон `.env_example` в корне проекта в файл `.env` и заполните значения переменных (логины, пароли, ключи). Файл `.env` **не должен** попадать в репозиторий. Пример переменных:
    - `SECRET_KEY`
-   - 'DEBUG'
-   - `DATABASE_NAME`, `DATABASE_USER`, `DATABASE_PASSWORD`, 'DATABASE_HOST', 'DATABASE_PORT'
-   - 'EMAIL_HOST', 'EMAIL_PORT', 'EMAIL_USE_TTL', 'EMAIL_USE_SSL', 'EMAIL_HOST_USER', 'EMAIL_HOST_PASSWORD'
+   - `DEBUG`
+   - `DATABASE_NAME`, `DATABASE_USER`, `DATABASE_PASSWORD`, `DATABASE_HOST`, `DATABASE_PORT`
+   - `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USE_TTL`, `EMAIL_USE_SSL`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`
    - `STRIPE_SECRET_KEY`
-   - 'CELERY_BROKER_URL', 'CELERY_RESULT_BACKEND', 'CELERY_TIMEZONE'
+   - `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND`, `CELERY_TIMEZONE`
 
 3. Соберите и запустите контейнеры:
-   docker-compose up --build
-
-4. После успешного запуска сервисы будут доступны:
+   ```bash
+   docker compose up --build
+   ```
+5. После успешного запуска сервисы будут доступны:
    - **Backend (web):** [http://localhost:8000](http://localhost:8000) (порт `8000:8000`).
    - **PostgreSQL (db):** `localhost:5432` (порт `5432:5432`).
    - **Redis:** `localhost:6379` (порт `6379:6379`).
@@ -51,7 +53,7 @@
     ```
   - Логи backend:
     ```bash
-    docker-compose logs -f web
+    docker compose logs -f web
     ```
 
 - **PostgreSQL:**
@@ -61,7 +63,7 @@
     ```
   - Через контейнер:
     ```bash
-    docker-compose exec db psql -U $DATABASE_USER -d $DATABASE_NAME
+    docker compose exec db psql -U $DATABASE_USER -d $DATABASE_NAME
     ```
 
 - **Redis:**
@@ -77,13 +79,13 @@
 - **Celery (worker):**
   - Логи:
     ```bash
-    docker-compose logs -f celery
+    docker compose logs -f celery
     ```
 
 - **Celery Beat (scheduler):**
   - Логи:
     ```bash
-    docker-compose logs -f celery-beat
+    docker compose logs -f celery-beat
     ```
 
 - **Nginx:**
@@ -105,7 +107,7 @@
 
 ### Запуск на удалённом сервере
 
-Приложение развёрнуто на публичном IP: [http://89.169.179.249](http://89.169.179.249). Для ручного деплоя на сервер (Ubuntu) выполните следующие шаги:
+Приложение развёрнуто на публичном IP: [http://158.160.71.241](http://158.160.71.241). Для ручного деплоя на сервер (Ubuntu) выполните следующие шаги:
 
 1. **Установите зависимости:**
    ```bash
@@ -113,10 +115,10 @@
    ```
 
 2. **Клонируйте проект:**
-   Клонируйте репозиторий в выбранную директорию (например, `/var/www/myproject`):
+   Клонируйте репозиторий в выбранную директорию (например, `/var/www/myapp`):
    ```bash
-   git clone <repository-url> /var/www/myproject
-   cd /var/www/myproject
+   git clone <repository-url> /var/www/myapp
+   cd /var/www/myapp
    ```
 
 3. **Настройте окружение:**
@@ -124,11 +126,11 @@
    - Убедитесь, что доступны переменные окружения для базы данных и других сервисов.
 
 4. **Настройте Nginx:**
-   - Скопируйте `nginx.conf` в `/etc/nginx/conf.d/myproject.conf`:
+   - Скопируйте `nginx.conf` в `/etc/nginx/conf.d/nginx.conf`:
      ```bash
-     sudo cp nginx.conf /etc/nginx/conf.d/myproject.conf
+     sudo cp nginx.conf /etc/nginx/conf.d/nginx.conf
      ```
-   - Отредактируйте `server_name` в `nginx.conf` на ваш домен (например, `89.169.179.249`) или оставьте `localhost` для IP-доступа.
+   - Отредактируйте `server_name` в `nginx.conf` на ваш домен (например, `158.160.71.241`) или оставьте `localhost` для IP-доступа.
    - Перезапустите Nginx:
      ```bash
      sudo systemctl restart nginx
@@ -141,8 +143,8 @@
 
 6. **Выполните миграции и сбор статики:**
    ```bash
-   sudo docker-compose exec web python manage.py migrate --noinput
-   sudo docker-compose exec web python manage.py collectstatic --noinput
+   sudo docker compose exec web python manage.py migrate --noinput
+   sudo docker compose exec web python manage.py collectstatic --noinput
    ```
 
 7. **Настройте firewall (опционально):**
@@ -158,14 +160,13 @@
 
 - В `docker-compose.yml` переменные подключены через `env_file: - .env`. Убедитесь, что в `.env` заданы `DATABASE_NAME`, `DATABASE_USER`, `DATABASE_PASSWORD` и другие необходимые переменные.
 - Сервис `web` выполняет миграции перед запуском сервера.
-- Используются тома `static_volume` и `media_volume` для хранения статических файлов и медиа.
 
 ## 🚀 Деплой и CI/CD
 
 ### Настройка сервера
 
 1. Установите зависимости (см. выше).
-2. Клонируйте проект в `/var/www/myproject`.
+2. Клонируйте проект в `/var/www/myapp`.
 3. Настройте Nginx (см. шаги выше).
 4. Откройте порты 80, 443, 22, используйте SSH-ключи для доступа.
 
@@ -175,14 +176,18 @@
 - `SSH_USER` — пользователь сервера.
 - `SERVER_IP` — IP-адрес сервера (например, `89.169.179.249`).
 - `SSH_KEY` — приватный ключ для доступа.
-- `DEPLOY_DIR` — директория на сервере (например, `/var/www/myproject`).
+- `DEPLOY_DIR` — директория на сервере (например, `myapp`).
 - `SECRET_KEY`, `DATABASE_NAME`, `DATABASE_USER`, `DATABASE_PASSWORD`, `STRIPE_SECRET_KEY`, `EMAIL`, `PASSWORD` — секреты для приложения.
 
 ### CI/CD
 
 Используется GitHub Actions (`.github/workflows/ci.yml`):
-- При push в ветки `develop` или `homework-35-2` запускаются тесты (`python manage.py test --settings=config.settings_ci`).
-- Если тесты успешны, выполняется деплой:
+- При push в ветки `develop` или `homework35_2` запускаeтся lint (проверка кода на соответствие стандартам PEP8).
+- Если нет ошибок, то запускаются тесты (test).
+- Если тесты успешны, запускается build:
+  - создание докер образа.
+  - загрузка образа на докер хаб.
+- После этого, выполняется деплой:
   - Синхронизация файлов через `rsync`.
   - Установка зависимостей через Poetry.
   - Миграции, сбор статики, перезапуск сервисов с бэкапом базы данных.
