@@ -1,9 +1,9 @@
-from rest_framework import serializers
 from django.shortcuts import get_object_or_404
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from lms.models import Lesson, Course
-from users.models import Payment, CustomUser, Subscription
+from lms.models import Course, Lesson
+from users.models import CustomUser, Payment, Subscription
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -39,7 +39,8 @@ class PaymentSerializer(serializers.ModelSerializer):
 
         if payment_method == 'stripe':
             if 'stripe_session_id' in data or 'payment_url' in data:
-                raise serializers.ValidationError("Поля stripe_session_id и payment_url заполняются автоматически")
+                raise serializers.ValidationError("Поля stripe_session_id"
+                                                  " и payment_url заполняются автоматически")
         else:
             data['stripe_session_id'] = None
             data['payment_url'] = None

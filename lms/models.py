@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import CASCADE
+
 from config import settings
 
 
@@ -17,7 +18,7 @@ class Course(models.Model):
         null=True,
     )
     price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True,verbose_name='Дата обновления курса')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления курса')
     notification_id = models.CharField(
         max_length=255,
         null=True,

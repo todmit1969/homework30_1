@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import Payment, CustomUser
+from users.models import CustomUser, Payment
 
 
 @admin.register(CustomUser)
