@@ -21,4 +21,13 @@ RUN poetry config virtualenvs.create false \
 COPY README.md /app/README.md
 COPY . .
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN mkdir -p /app/media
+
+COPY entrypoint.sh .
+RUN sed -i 's/\r$//' entrypoint.sh
+RUN chmod +x entrypoint.sh
+
+EXPOSE 8000
+
+CMD ["./entrypoint.sh"]
